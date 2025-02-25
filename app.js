@@ -18,10 +18,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // 🔹 Default Route ko `index.html` par redirect karo
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
 // 🔹 Routes
 app.use("/users", usersRouter);
 
