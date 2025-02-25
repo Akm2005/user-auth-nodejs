@@ -5,7 +5,7 @@ var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var swaggerDocs = require("./swagger"); // Swagger Import Karo
+var swaggerDocs = require("./swagger");
 
 var app = express();
 
@@ -13,12 +13,19 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// 🔹 Serve Static Files
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
+// 🔹 Default Route ko `index.html` par redirect karo
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// 🔹 Routes
 app.use("/users", usersRouter);
 
-// Swagger Init Karo
+// 🔹 Swagger Init Karo
 const PORT = process.env.PORT || 3000;
 swaggerDocs(app, PORT);
 
